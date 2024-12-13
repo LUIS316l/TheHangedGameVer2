@@ -12,6 +12,7 @@ import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
+import server.Cliente;
 import utils.CloseAllWindows;
 
 public class JoinScreen extends javax.swing.JFrame {
@@ -22,7 +23,9 @@ public class JoinScreen extends javax.swing.JFrame {
     private Font labelFont = new Font("Doto", Font.BOLD, 20);
     private Color textColorLabel = Color.WHITE;
 
-    
+    private CustomeTextField textName;
+    private CustomeTextField textCode;
+        
     public JoinScreen() {
         initComponents();
         isEscapePressed = false;
@@ -30,19 +33,27 @@ public class JoinScreen extends javax.swing.JFrame {
         addCustomeTextField();
         addCustomeList();
     }
-
+    
+    private void startClient() {
+        String ip = textCode.getText();
+        String playerName = textName.getText();
+        
+        String serverAddress = ip;
+        int port = 12345;
+        
+        Cliente cliente = new Cliente(serverAddress, port, playerName);
+        Thread clienteThread = new Thread(cliente); 
+        clienteThread.start();
+        
+        System.out.println("CLIENTE CONECTANDOSE AL SERVIDOR " + serverAddress + ":" + port);        
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         panelComponents = new javax.swing.JPanel();
         panelInfo = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -53,69 +64,7 @@ public class JoinScreen extends javax.swing.JFrame {
 
         panelInfo.setBackground(new java.awt.Color(47, 89, 114));
         panelInfo.setPreferredSize(new java.awt.Dimension(450, 600));
-
-        jLabel1.setFont(new java.awt.Font("Doto", 1, 40)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("GAME");
-
-        jLabel2.setFont(new java.awt.Font("Doto", 1, 40)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("32");
-
-        jLabel3.setFont(new java.awt.Font("Doto", 1, 25)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("ROUNDS -->");
-
-        jLabel4.setFont(new java.awt.Font("Doto", 1, 25)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("TIME -->");
-
-        jLabel5.setFont(new java.awt.Font("Doto", 1, 25)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("WORDS -->");
-
-        jLabel6.setFont(new java.awt.Font("Doto", 1, 25)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("WORDS CANT -->");
-
-        javax.swing.GroupLayout panelInfoLayout = new javax.swing.GroupLayout(panelInfo);
-        panelInfo.setLayout(panelInfoLayout);
-        panelInfoLayout.setHorizontalGroup(
-            panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInfoLayout.createSequentialGroup()
-                .addContainerGap(33, Short.MAX_VALUE)
-                .addGroup(panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInfoLayout.createSequentialGroup()
-                            .addGroup(panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGap(177, 177, 177))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInfoLayout.createSequentialGroup()
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(19, 19, 19)))))
-        );
-        panelInfoLayout.setVerticalGroup(
-            panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelInfoLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(jLabel1)
-                .addGap(39, 39, 39)
-                .addComponent(jLabel3)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel4)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel5)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 179, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(68, 68, 68))
-        );
+        panelInfo.setLayout(new java.awt.GridBagLayout());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -145,7 +94,10 @@ public class JoinScreen extends javax.swing.JFrame {
                 if (e.getID() == KeyEvent.KEY_PRESSED && e.getKeyCode() == KeyEvent.VK_ESCAPE) {
                     abrirVentanaAnterior();
                     return true;
+                } else if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    startClient();
                 }
+                
                 return false; 
             }
         };
@@ -173,7 +125,7 @@ public class JoinScreen extends javax.swing.JFrame {
         this.dispose();
     }
     
-    
+      
     private void addCustomeTextField() {
         int columns = 20;
         Dimension textFieldSize = new Dimension(250, 40);
@@ -183,16 +135,17 @@ public class JoinScreen extends javax.swing.JFrame {
         Color hoverColor = new Color(100, 200, 250);
         int radius = 15;
         
+        
         JLabel label1 = new JLabel("USER NAME: ");
-        CustomeTextField textField1 = new CustomeTextField(columns, textFieldSize, defaultColor, focusColor, textColor, hoverColor, radius);
+        textName = new CustomeTextField(columns, textFieldSize, defaultColor, focusColor, textColor, hoverColor, radius);
         label1.setFont(labelFont);
         label1.setForeground(textColorLabel);
          
         JLabel label2 = new JLabel("CODE GAME: ");
-        CustomeTextField textField2 = new CustomeTextField(columns, textFieldSize, defaultColor, focusColor, textColor, hoverColor, radius);
+        textCode = new CustomeTextField(columns, textFieldSize, defaultColor, focusColor, textColor, hoverColor, radius);
         label2.setFont(labelFont);
         label2.setForeground(textColorLabel);
-
+        
         GridBagConstraints gbcCt = new GridBagConstraints();
         gbcCt.gridx = 0;
         gbcCt.insets = new Insets(10, 15, 10, 0); 
@@ -202,13 +155,13 @@ public class JoinScreen extends javax.swing.JFrame {
         panelComponents.add(label1, gbcCt);
 
         gbcCt.gridy = 1; 
-        panelComponents.add(textField1, gbcCt); 
+        panelComponents.add(textName, gbcCt); 
 
         gbcCt.gridy = 2;
         panelComponents.add(label2, gbcCt); 
 
         gbcCt.gridy = 3;
-        panelComponents.add(textField2, gbcCt); 
+        panelComponents.add(textCode, gbcCt); 
 
         panelComponents.revalidate();
         panelComponents.repaint();
@@ -220,8 +173,7 @@ public class JoinScreen extends javax.swing.JFrame {
         model.addElement("Player 2");
         model.addElement("Player 3");
         model.addElement("Player 4");
-        model.addElement("Player 5");
-
+  
         Dimension listSize = new Dimension(250, 200); 
         Color defaultColor = new Color(255, 255, 255);
         Color textColor = Color.BLACK;
@@ -248,12 +200,6 @@ public class JoinScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel panelComponents;
     private javax.swing.JPanel panelInfo;
     // End of variables declaration//GEN-END:variables

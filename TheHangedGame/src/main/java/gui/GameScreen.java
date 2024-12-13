@@ -71,6 +71,8 @@ public class GameScreen extends JFrame {
         panelMonito.repaint();
     }
         
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

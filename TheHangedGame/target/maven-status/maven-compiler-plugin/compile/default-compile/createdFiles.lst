@@ -1,6 +1,7 @@
 gui\JoinScreen$1.class
 gui\HowGameScreen$2.class
 server\dbConnection.class
+gui\ADMscreen$3.class
 customeComponents\CustomeButton$1.class
 customeComponents\CustomeList.class
 gui\GameScreen.class
@@ -17,7 +18,6 @@ gui\WinnerScreen.class
 gui\AsignWordsScreen.class
 gui\SinglePlayerScreen.class
 gui\SinglePlayerScreen$1.class
-utils\GameLogic.class
 gui\CreateScreen$2.class
 customeComponents\CustomeButtonInfo$1.class
 customeComponents\CustomeTable$CustomCellRenderer.class
@@ -31,12 +31,15 @@ utils\ThreadTimer.class
 gui\SinglePlayerScreen$2.class
 gui\HomeScreen$NavigationManager.class
 customeComponents\CustomeButton.class
+gui\ADMscreen$2.class
 gui\HomeScreen.class
 gui\PRUEBASDEBOTONES.class
+gui\ADMscreen$5.class
 gui\CreateScreen.class
 gui\HowGameScreen$1.class
 gui\JoinOrCreate$3.class
 customeComponents\CustomeTextArea.class
+gui\ADMscreen$4.class
 customeComponents\CustomeButtonInfo.class
 gui\ADMscreen.class
 gui\PRUEBASDEBOTONES$1.class

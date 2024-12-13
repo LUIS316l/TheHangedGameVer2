@@ -13,8 +13,11 @@ import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
+import server.Servidor;
 
 import utils.CloseAllWindows;
 
@@ -22,25 +25,40 @@ public class CreateScreen extends javax.swing.JFrame {
 
     private KeyEventDispatcher escKeyDispatcher;
     private boolean isEscapePressed = false;
+        
+    private CustomeTextField textName;
+    private CustomeTextField textRounds;
+    private CustomeTextField textTimeWord;
+    private CustomeTextField textWordsCant;
+    private CustomeTextField textCodeGame;
     
     private Font labelFont = new Font("Doto", Font.BOLD, 20);
     private Color textColorLabel = Color.WHITE;
-    
-    private String name;
-    private String rounds;
-    private String timeWords;
-    private String words;
-    private String wordsCant;
-    private String codeGame;
      
     public CreateScreen() {
         initComponents();
         isEscapePressed = false;
         addEscKeyListener();
         addCustomeTextField();
-        addCustomeList();
+        IPAddress();
+        startServer();
     }
-
+    
+    private void startServer() {
+        int port = 12345;
+        
+        String playerName = textName.getText();
+        String rounds = textRounds.getText();
+        String timeWord = textTimeWord.getText();
+        String wordsCant = textWordsCant.getText();
+        
+        Servidor servidor = new Servidor(port, playerName, rounds, timeWord, wordsCant);
+        Thread servidorThread = new Thread(servidor);    
+        servidorThread.start();
+        
+        System.out.println("SERVIDOR INICIADO EN EL PUERTO ---- " + port);
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -87,7 +105,7 @@ public class CreateScreen extends javax.swing.JFrame {
                 return false; 
             }
         };
-
+        
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(escKeyDispatcher);
     }
         
@@ -119,45 +137,34 @@ public class CreateScreen extends javax.swing.JFrame {
         Color textColor = Color.BLACK; 
         Color hoverColor = new Color(100, 200, 250);
         int radius = 15;
-        
-        
-        JLabel label1 = new JLabel("USER NAME: ");
-        CustomeTextField textName = new CustomeTextField(columns, textFieldSize, defaultColor, focusColor, textColor, hoverColor, radius);
+               
+        JLabel label1 = new JLabel("NOMBRE: ");
+        textName = new CustomeTextField(columns, textFieldSize, defaultColor, focusColor, textColor, hoverColor, radius);
         label1.setFont(labelFont);
         label1.setForeground(textColorLabel);
 
-        JLabel label2 = new JLabel("ROUNDS: ");
-        CustomeTextField textRounds = new CustomeTextField(columns, textFieldSize, defaultColor, focusColor, textColor, hoverColor, radius);
+        JLabel label2 = new JLabel("RONDAS: ");
+        textRounds = new CustomeTextField(columns, textFieldSize, defaultColor, focusColor, textColor, hoverColor, radius);
         label2.setFont(labelFont);
         label2.setForeground(textColorLabel);
         
-        JLabel label3 = new JLabel("TIME: ");
-        CustomeTextField textTimeWord = new CustomeTextField(columns, textFieldSize, defaultColor, focusColor, textColor, hoverColor, radius);
+        JLabel label3 = new JLabel("TIEMPO: ");
+        textTimeWord = new CustomeTextField(columns, textFieldSize, defaultColor, focusColor, textColor, hoverColor, radius);
         label3.setFont(labelFont);
         label3.setForeground(textColorLabel);
-        
-        JLabel label4 = new JLabel("WORDS: ");
-        CustomeTextField textWords = new CustomeTextField(columns, textFieldSize, defaultColor, focusColor, textColor, hoverColor, radius);
-        label4.setFont(labelFont);
-        label4.setForeground(textColorLabel);
-        
-        JLabel label5 = new JLabel("WORDS CANT: ");
-        CustomeTextField textWordsCant = new CustomeTextField(columns, textFieldSize, defaultColor, focusColor, textColor, hoverColor, radius);
+               
+        JLabel label5 = new JLabel("NUMERO DE PALABRAS: ");
+        textWordsCant = new CustomeTextField(columns, textFieldSize, defaultColor, focusColor, textColor, hoverColor, radius);
         label5.setFont(labelFont);
         label5.setForeground(textColorLabel);
         
         // IP
-        JLabel label6 = new JLabel("CODE GAME: ");
-        CustomeTextField textCodeGame = new CustomeTextField(columns, textFieldSize, defaultColor, focusColor, textColor, hoverColor, radius);
+        JLabel label6 = new JLabel("IP DEL SERVIDOR: ");
+        textCodeGame = new CustomeTextField(columns, textFieldSize, defaultColor, focusColor, textColor, hoverColor, radius);
         label6.setFont(labelFont);
         label6.setForeground(textColorLabel);
-        
-        name = textName.getText();
-        rounds = textRounds.getText();
-        timeWords =textTimeWord.getText();
-        words = textWords.getText();
-        wordsCant = textWordsCant.getText();
-        codeGame = textCodeGame.getText();
+                
+        addCustomeList(textName, textRounds, textTimeWord, textWordsCant);
 
         GridBagConstraints gbcCt = new GridBagConstraints();
         gbcCt.gridx = 0;
@@ -181,44 +188,44 @@ public class CreateScreen extends javax.swing.JFrame {
 
         gbcCt.gridy = 5; 
         panelComponents.add(textTimeWord, gbcCt); 
-
+        
         gbcCt.gridy = 6;
-        panelComponents.add(label4, gbcCt); 
-        
-        gbcCt.gridy = 7; 
-        panelComponents.add(textWords, gbcCt); 
-        
-        gbcCt.gridy = 8;
         panelComponents.add(label5, gbcCt); 
         
-        gbcCt.gridy = 9; 
+        gbcCt.gridy = 7; 
         panelComponents.add(textWordsCant, gbcCt); 
         
-        gbcCt.gridy = 10;
+        gbcCt.gridy = 8;
         panelComponents.add(label6, gbcCt); 
         
-        gbcCt.gridy = 11; 
+        gbcCt.gridy = 9; 
         panelComponents.add(textCodeGame, gbcCt);
 
         panelComponents.revalidate();
         panelComponents.repaint();
     }
     
-    private void addCustomeList() {
+    private void addCustomeList(CustomeTextField textName, CustomeTextField textRounds, CustomeTextField textTimeWord, CustomeTextField textWordsCant ) {
         Dimension buttonSize = new Dimension(250, 50);
         Color colorBtnJoin = new Color(33, 77, 103);
         Color hoverBtnJoin = new Color(56, 182, 255);
         Color pressedColorBtnJoin = new Color(33, 77, 103);
         
-        CustomeButton cbsg = new CustomeButton("START GAME", buttonSize, colorBtnJoin, hoverBtnJoin, pressedColorBtnJoin);
+        CustomeButton cbCs = new CustomeButton("INICIAR PARTIDA", buttonSize, colorBtnJoin, hoverBtnJoin, pressedColorBtnJoin);
         
-        cbsg.addActionListener(new ActionListener() {
+        cbCs.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AsignWordsScreen aws = new AsignWordsScreen();
                 
-                aws.setVisible(true);
-                aws.setLocationRelativeTo(null);
+                String name = textName.getText().trim();
+                String rounds = textRounds.getText().trim();
+                String timeWords =textTimeWord.getText().trim();
+                String wordsCant = textWordsCant.getText().trim();
+                            
+                GameScreen gs = new GameScreen(name, rounds, timeWords, wordsCant);
+                
+                gs.setVisible(true);
+                gs.setLocationRelativeTo(null);
                 
                 dispose();
             }        
@@ -236,7 +243,7 @@ public class CreateScreen extends javax.swing.JFrame {
         Color textColor = Color.BLACK;
         int borderRadius = 20;
         
-        JLabel label3 = new JLabel("PLAYERS ");
+        JLabel label3 = new JLabel("JUGADORES ");
         CustomeList<String> customeList = new CustomeList<>(model, listSize, defaultColor, textColor, borderRadius);
         label3.setFont(labelFont);
         label3.setForeground(textColorLabel);
@@ -266,12 +273,29 @@ public class CreateScreen extends javax.swing.JFrame {
         panelList.add(label6, gbc);
         
         gbc.gridy = 9;
-        panelList.add(cbsg, gbc);
+        panelList.add(cbCs, gbc);
+        
+        gbc.gridy = 10;
+        panelList.add(cbCs, gbc);
 
         panelList.revalidate();
         panelList.repaint();
     }
 
+    private void IPAddress() {
+        try {
+            InetAddress ip = InetAddress.getLocalHost();
+            
+            System.out.println("IP --- " + ip.getHostAddress());
+            
+            String host = ip.getHostAddress();
+            
+            textCodeGame.setText(host);
+        } catch (UnknownHostException e) {
+            System.out.println("No se pudo obtener la IP: " + e.getMessage());
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel panelComponents;
     private javax.swing.JPanel panelList;

@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 public class HowGameScreen extends javax.swing.JFrame {
 
     public HowGameScreen() {
+        //Constructor que inicializa los componentes y agrega el listener para la tecla enter
         initComponents();
         addEnterKeyListener();
     }
@@ -71,23 +72,25 @@ public class HowGameScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addEnterKeyListener() {
-        panelHowGame.addKeyListener(new KeyAdapter() {
-           public void keyPressed(KeyEvent e) {
-               if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                   HomeScreen hs = new HomeScreen();
-                   
-                   hs.setVisible(true);
-                   hs.setLocationRelativeTo(null);
-                   
-                   dispose();
+          // Agrega un listener para detectar la tecla ESC y navegar al menú principal.
+    panelHowGame.addKeyListener(new KeyAdapter() {
+        public void keyPressed(KeyEvent e) {
+            if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                HomeScreen hs = new HomeScreen();
+
+                hs.setVisible(true); // Muestra la pantalla principal.
+                hs.setLocationRelativeTo(null); // Centra la ventana.
+
+                dispose(); // Cierra la ventana actual.
                }
             }
         });
-        panelHowGame.setFocusable(true);
+        panelHowGame.setFocusable(true); // Asegura que el panel sea el objetivo de entrada.
+
     }
     
     public static void main(String args[]) {
-
+        // Lanza la aplicación creando una instancia de HowGameScreen.
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new HowGameScreen().setVisible(true);

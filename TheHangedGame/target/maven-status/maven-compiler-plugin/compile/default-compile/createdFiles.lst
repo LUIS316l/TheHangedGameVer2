@@ -12,10 +12,7 @@ server\Cliente.class
 customeComponents\CustomeTextField$1.class
 gui\JoinOrCreate$1.class
 gui\WinnerScreen$1.class
-gui\AsignWordsScreen$2.class
-gui\AsignWordsScreen$1.class
 gui\WinnerScreen.class
-gui\AsignWordsScreen.class
 gui\SinglePlayerScreen.class
 gui\SinglePlayerScreen$1.class
 gui\CreateScreen$2.class

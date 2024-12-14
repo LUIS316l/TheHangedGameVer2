@@ -48,39 +48,46 @@ public class PRUEBASDEBOTONES extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addCustomeComponents() {
-        // Datos de ejemplo para la lista
-        DefaultListModel<String> model = new DefaultListModel<>();
-        model.addElement("Elemento 1");
-        model.addElement("Elemento 2");
-        model.addElement("Elemento 3");
-        model.addElement("Elemento 4");
-        model.addElement("Elemento 5");
+         // Datos de ejemplo para la lista.
+    DefaultListModel<String> model = new DefaultListModel<>();
+    // Agrega elementos al modelo de la lista.
+    model.addElement("Elemento 1");
+    model.addElement("Elemento 2");
+    model.addElement("Elemento 3");
+    model.addElement("Elemento 4");
+    model.addElement("Elemento 5");
 
-        // Configuración de la lista personalizada
-        Dimension listSize = new Dimension(300, 200); // Ancho y alto de la lista
-        Color defaultColor = new Color(255, 255, 255);
-        Color textColor = Color.BLACK;
-        int borderRadius = 20;
+        /// Configuración de la lista personalizada (tamaño, colores, etc.)
+    Dimension listSize = new Dimension(300, 200); // Define el tamaño de la lista (300px de ancho y 200px de alto).
+    Color defaultColor = new Color(255, 255, 255); // Establece el color de fondo de la lista (blanco).
+    Color textColor = Color.BLACK; // Define el color del texto de los elementos de la lista (negro).
+    int borderRadius = 20; // Define el radio de los bordes de la lista para que tengan esquinas redondeadas.
 
-        CustomeList<String> customeList = new CustomeList<>(model, listSize, defaultColor, textColor, borderRadius);
-
+    // Crea una instancia de la clase CustomeList usando los parámetros definidos.
+    CustomeList<String> customeList = new CustomeList<>(model, listSize, defaultColor, textColor, borderRadius);
         // Usar GridBagConstraints para colocar la lista en el panel
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.insets = new Insets(20, 20, 20, 20);
-        gbc.anchor = GridBagConstraints.CENTER;
+        // Usar GridBagConstraints para colocar la lista en el panel.
+    GridBagConstraints gbc = new GridBagConstraints();
+    gbc.gridx = 0; // Define la columna donde se colocará el componente (columna 0).
+    gbc.gridy = 0; // Define la fila donde se colocará el componente (fila 0).
+    gbc.insets = new Insets(20, 20, 20, 20); // Agrega márgenes de 20 píxeles alrededor del componente.
+    gbc.anchor = GridBagConstraints.CENTER; // Centra el componente en el espacio disponible.
 
-        panel.add(customeList, gbc);
-        panel.revalidate();
-        panel.repaint();
+    // Añade la lista personalizada al panel usando las restricciones definidas en GridBagConstraints.
+    panel.add(customeList, gbc);
+    // Vuelve a validar el panel para asegurarse de que se actualice con los nuevos componentes.
+    panel.revalidate();
+    // Repinta el panel para asegurarse de que se muestren correctamente los nuevos componentes.
+    panel.repaint();
     }
     
     public static void main(String args[]) {
  
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PRUEBASDEBOTONES().setVisible(true);
+         // Llama a la ejecución del hilo de la interfaz gráfica en el Event Dispatch Thread.
+    java.awt.EventQueue.invokeLater(new Runnable() {
+        public void run() {
+            // Crea una nueva instancia de PRUEBASDEBOTONES y la hace visible.
+            new PRUEBASDEBOTONES().setVisible(true);
             }
         });
     }

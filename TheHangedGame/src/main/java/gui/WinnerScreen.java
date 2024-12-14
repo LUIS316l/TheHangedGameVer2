@@ -6,16 +6,25 @@ import utils.CloseAllWindows;
 
 public class WinnerScreen extends javax.swing.JFrame {
 
-    private String player;
+    // Definición de una variable privada de tipo String que almacena el nombre del jugador
+private String player;
     
-    public WinnerScreen(String msg, String player) {
-        this.player = player;
+// Constructor de la clase WinnerScreen, que recibe un mensaje y el nombre de un jugador
+public WinnerScreen(String msg, String player) {
+    // Asigna el nombre del jugador al campo player
+    this.player = player;
         
-        initComponents();
-        addEnterKeyListener();
-        
-        lblText.setText(msg);
-        lblPlayerName.setText(player);
+    // Inicializa los componentes de la interfaz gráfica (normalmente generados por el diseñador de interfaz gráfica)
+    initComponents();
+    
+    // Agrega el escuchador de la tecla Enter para que la pantalla responda a dicha tecla
+    addEnterKeyListener();
+    
+    // Establece el texto del JLabel lblText con el mensaje recibido como parámetro
+    lblText.setText(msg);
+    
+    // Establece el texto del JLabel lblPlayerName con el nombre del jugador recibido como parámetro
+    lblPlayerName.setText(player);
     }
 
     @SuppressWarnings("unchecked")
@@ -76,21 +85,30 @@ public class WinnerScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     
     private void addEnterKeyListener() {
-        panelWinner.addKeyListener(new KeyAdapter() {
-           public void keyPressed(KeyEvent e) {
-               if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-                   HomeScreen hs = new HomeScreen();
-                   
-                   CloseAllWindows.cerrarTodasLasVentanas();
-                   
-                   hs.setVisible(true);
-                   hs.setLocationRelativeTo(null);
-                   
-                   dispose();
-               }
-           }
-        });
-        panelWinner.setFocusable(true);
+    // Se añade un KeyListener al panelWinner para escuchar las teclas presionadas
+    panelWinner.addKeyListener(new KeyAdapter() {
+        // Método que se ejecuta cuando se presiona una tecla
+        public void keyPressed(KeyEvent e) {
+            // Verifica si la tecla presionada es la tecla Enter
+            if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+                // Si es Enter, crea una nueva instancia de la pantalla HomeScreen
+                HomeScreen hs = new HomeScreen();
+                
+                // Cierra todas las ventanas abiertas antes de mostrar la nueva pantalla
+                CloseAllWindows.cerrarTodasLasVentanas();
+                
+                // Muestra la nueva pantalla y la coloca en el centro de la pantalla
+                hs.setVisible(true);
+                hs.setLocationRelativeTo(null);
+                
+                // Cierra la ventana actual (panelWinner)
+                dispose();
+            }
+        }
+    });
+    
+    // Establece que el panelWinner puede recibir eventos de teclado
+    panelWinner.setFocusable(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

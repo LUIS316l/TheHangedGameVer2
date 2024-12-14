@@ -22,11 +22,19 @@ public class SinglePlayerScreen extends JFrame {
     private KeyEventDispatcher escKeyDispatcher;
     private boolean isEscapePressed = false;
 
-    public SinglePlayerScreen() {
-        initComponents();
-        isEscapePressed = false;
-        addCustomeTextField();
-        addEscKeyListener();
+    // Constructor de la clase SinglePlayerScreen, que se ejecuta cuando se crea una nueva instancia de esta pantalla.
+public SinglePlayerScreen() {
+    // Inicializa los componentes gráficos de la ventana (botones, campos de texto, etc.).
+    initComponents();
+    
+    // Inicializa la variable isEscapePressed como false, lo que indica que no se ha presionado la tecla ESCAPE aún.
+    isEscapePressed = false;
+    
+    // Llama al método addCustomeTextField() para agregar campos de texto personalizados a la pantalla.
+    addCustomeTextField();
+    
+    // Llama al método addEscKeyListener() para agregar un escuchador de la tecla ESCAPE.
+    addEscKeyListener();
     }
 
     @SuppressWarnings("unchecked")
@@ -74,143 +82,165 @@ public class SinglePlayerScreen extends JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void addEscKeyListener() {
-        escKeyDispatcher = new KeyEventDispatcher() {
-            @Override
-            public boolean dispatchKeyEvent(KeyEvent e) {
-                if (e.getID() == KeyEvent.KEY_PRESSED && e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    abrirVentanaAnterior();
-                    return true;
-                }
-                return false; 
+    // Método para agregar un escucha de la tecla ESC para poder cerrar la ventana y regresar a la pantalla anterior.
+private void addEscKeyListener() {
+    // Crear un KeyEventDispatcher que captura los eventos de teclado.
+    escKeyDispatcher = new KeyEventDispatcher() {
+        @Override
+        // Método que captura los eventos de tecla.
+        public boolean dispatchKeyEvent(KeyEvent e) {
+            // Verifica si se ha presionado la tecla ESCAPE.
+            if (e.getID() == KeyEvent.KEY_PRESSED && e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                // Si se presiona ESCAPE, se llama al método para abrir la ventana anterior.
+                abrirVentanaAnterior();
+                return true; // Indica que el evento ha sido manejado.
             }
-        };
-
-        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(escKeyDispatcher);
-    }
-    
-    
-    private void abrirVentanaAnterior() {
-        if (isEscapePressed) {
-            return;
+            return false; // Si no es ESCAPE, el evento no se maneja.
         }
-        
-        isEscapePressed = true;
-        
-        KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(escKeyDispatcher);
-        
-        CloseAllWindows.cerrarTodasLasVentanas();
-        
-        HomeScreen hs = new HomeScreen();
-                   
-        hs.setVisible(true);
-        hs.setLocationRelativeTo(null);
+    };
 
-        this.dispose();
+    // Agrega el KeyEventDispatcher al manejador de eventos de teclado.
+    KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(escKeyDispatcher);
+}
+
+// Método que maneja la acción de abrir la ventana anterior.
+private void abrirVentanaAnterior() {
+    // Si ya se ha presionado ESCAPE, no hacer nada más.
+    if (isEscapePressed) {
+        return;
     }
     
-    private void addCustomeTextField() {
-        int columns = 20;
-        Dimension textFieldSize = new Dimension(250, 40);
-        Color defaultColor = new Color(255, 255, 255);
-        Color focusColor = new Color(200, 230, 250);
-        Color textColor = Color.BLACK; 
-        Color hoverColor = new Color(100, 200, 250);
-        int radius = 15;
-        
-        Font labelFont = new Font("Doto", Font.BOLD, 20);
-
-        JLabel label1 = new JLabel("USER NAME: ");
-        CustomeTextField textName = new CustomeTextField(columns, textFieldSize, defaultColor, focusColor, textColor, hoverColor, radius);
-        label1.setFont(labelFont);
-         
-        JLabel label2 = new JLabel("ROUNDS: ");
-        CustomeTextField textRounds = new CustomeTextField(columns, textFieldSize, defaultColor, focusColor, textColor, hoverColor, radius);
-        label2.setFont(labelFont);
-        
-        JLabel label3 = new JLabel("WORD TIME: ");
-        CustomeTextField textTime = new CustomeTextField(columns, textFieldSize, defaultColor, focusColor, textColor, hoverColor, radius);
-        label3.setFont(labelFont);
-        
-        JLabel label4 = new JLabel("WORD CANT: ");
-        CustomeTextField textWordsCant = new CustomeTextField(columns, textFieldSize, defaultColor, focusColor, textColor, hoverColor, radius);
-        label4.setFont(labelFont);
-        
-        addCustomeButton(textName, textRounds, textTime, textWordsCant);
-        
-        JLabel label5 = new JLabel(" ");
-
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.insets = new Insets(10, 15, 10, 0); 
-        gbc.anchor = GridBagConstraints.WEST; 
-
-        gbc.gridy = 0;
-        panelComponents.add(label1, gbc);
-
-        gbc.gridy = 1; 
-        panelComponents.add(textName, gbc); 
-
-        gbc.gridy = 2;
-        panelComponents.add(label2, gbc); 
-
-        gbc.gridy = 3;
-        panelComponents.add(textRounds, gbc); 
-
-        gbc.gridy = 4;
-        panelComponents.add(label3, gbc); 
-
-        gbc.gridy = 5;
-        panelComponents.add(textTime, gbc); 
-        
-        gbc.gridy = 6;
-        panelComponents.add(label4, gbc); 
-        
-        gbc.gridy = 7;
-        panelComponents.add(textWordsCant, gbc); 
-
-        gbc.gridy = 8;
-        panelComponents.add(label5, gbc);
-
-        panelComponents.revalidate();
-        panelComponents.repaint();
-    }
+    // Marca que ESCAPE ya ha sido presionada para evitar múltiples acciones.
+    isEscapePressed = true;
     
-    private void addCustomeButton(CustomeTextField textName, CustomeTextField textRounds, CustomeTextField textTime, CustomeTextField textWordsCant) {
-        Dimension buttonSize = new Dimension(250, 50);
-        Color colorBtnSingle = new Color(33, 77, 103);
-        Color hoverBtnSingle = new Color(56, 182, 255);
-        Color pressedColorBtnSingle = new Color(33, 77, 103);
-                
-        CustomeButton cbsp = new CustomeButton("START GAME", buttonSize, colorBtnSingle, hoverBtnSingle, pressedColorBtnSingle);
-        
-        cbsp.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-                String playerName = textName.getText().trim();
-                String rounds = textRounds.getText().trim();
-                String timeWords = textTime.getText().trim();
-                String wordsCant = textWordsCant.getText().trim();
-                
-                GameScreen gs = new GameScreen(playerName, rounds, timeWords, wordsCant);
-                
-                gs.setVisible(true);
-                gs.setLocationRelativeTo(null);
-                
-                dispose();
-            }        
-        }); 
-        
-        GridBagConstraints gbcSingle = new GridBagConstraints();
-        gbcSingle.gridx = 0; 
-        gbcSingle.gridy = 9;    
-        gbcSingle.insets = new Insets(10, 10, 10, 10); 
-        gbcSingle.anchor = GridBagConstraints.CENTER;
+    // Remueve el KeyEventDispatcher que escucha la tecla ESCAPE.
+    KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(escKeyDispatcher);
+    
+    // Cierra todas las ventanas abiertas.
+    CloseAllWindows.cerrarTodasLasVentanas();
+    
+    // Crea una nueva instancia de la pantalla principal (HomeScreen).
+    HomeScreen hs = new HomeScreen();
                
-        panelComponents.add(cbsp, gbcSingle);
-        panelComponents.revalidate();
-        panelComponents.repaint();
+    // Hace visible la ventana y la centra en la pantalla.
+    hs.setVisible(true);
+    hs.setLocationRelativeTo(null);
+
+    // Cierra la ventana actual.
+    this.dispose();
+}
+
+// Método para agregar campos de texto personalizados a la pantalla.
+private void addCustomeTextField() {
+    // Definición de las propiedades de los campos de texto.
+    int columns = 20; // Número de columnas del campo de texto.
+    Dimension textFieldSize = new Dimension(250, 40); // Tamaño del campo de texto.
+    Color defaultColor = new Color(255, 255, 255); // Color de fondo del campo de texto.
+    Color focusColor = new Color(200, 230, 250); // Color cuando el campo de texto está enfocado.
+    Color textColor = Color.BLACK; // Color del texto.
+    Color hoverColor = new Color(100, 200, 250); // Color al pasar el mouse sobre el campo.
+    int radius = 15; // Radio de las esquinas del campo de texto para redondearlas.
+    
+    // Definición de la fuente de las etiquetas.
+    Font labelFont = new Font("Doto", Font.BOLD, 20);
+
+    // Creación de las etiquetas y campos de texto personalizados.
+    JLabel label1 = new JLabel("USER NAME: ");
+    CustomeTextField textName = new CustomeTextField(columns, textFieldSize, defaultColor, focusColor, textColor, hoverColor, radius);
+    label1.setFont(labelFont);
+
+    JLabel label2 = new JLabel("ROUNDS: ");
+    CustomeTextField textRounds = new CustomeTextField(columns, textFieldSize, defaultColor, focusColor, textColor, hoverColor, radius);
+    label2.setFont(labelFont);
+
+    JLabel label3 = new JLabel("WORD TIME: ");
+    CustomeTextField textTime = new CustomeTextField(columns, textFieldSize, defaultColor, focusColor, textColor, hoverColor, radius);
+    label3.setFont(labelFont);
+
+    JLabel label4 = new JLabel("WORD CANT: ");
+    CustomeTextField textWordsCant = new CustomeTextField(columns, textFieldSize, defaultColor, focusColor, textColor, hoverColor, radius);
+    label4.setFont(labelFont);
+    
+    // Llama a otro método que añade el botón de inicio con los valores de los campos de texto.
+    addCustomeButton(textName, textRounds, textTime, textWordsCant);
+    
+    JLabel label5 = new JLabel(" "); // Un espacio en blanco al final de los campos.
+
+    // Usa GridBagConstraints para colocar las etiquetas y campos de texto en el panel.
+    GridBagConstraints gbc = new GridBagConstraints();
+    gbc.gridx = 0; // Columna donde se coloca el componente.
+    gbc.insets = new Insets(10, 15, 10, 0); // Márgenes alrededor del componente.
+    gbc.anchor = GridBagConstraints.WEST; // Alinea los componentes a la izquierda.
+
+    // Añade las etiquetas y campos de texto al panel en diferentes filas.
+    gbc.gridy = 0;
+    panelComponents.add(label1, gbc);
+    gbc.gridy = 1;
+    panelComponents.add(textName, gbc);
+    gbc.gridy = 2;
+    panelComponents.add(label2, gbc);
+    gbc.gridy = 3;
+    panelComponents.add(textRounds, gbc);
+    gbc.gridy = 4;
+    panelComponents.add(label3, gbc);
+    gbc.gridy = 5;
+    panelComponents.add(textTime, gbc);
+    gbc.gridy = 6;
+    panelComponents.add(label4, gbc);
+    gbc.gridy = 7;
+    panelComponents.add(textWordsCant, gbc);
+    gbc.gridy = 8;
+    panelComponents.add(label5, gbc);
+
+    // Revalidación y repintado del panel para reflejar los cambios.
+    panelComponents.revalidate();
+    panelComponents.repaint();
+}
+
+// Método para agregar el botón de inicio del juego.
+private void addCustomeButton(CustomeTextField textName, CustomeTextField textRounds, CustomeTextField textTime, CustomeTextField textWordsCant) {
+    // Define el tamaño del botón y los colores.
+    Dimension buttonSize = new Dimension(250, 50);
+    Color colorBtnSingle = new Color(33, 77, 103);
+    Color hoverBtnSingle = new Color(56, 182, 255);
+    Color pressedColorBtnSingle = new Color(33, 77, 103);
+    
+    // Crea el botón de inicio de juego.
+    CustomeButton cbsp = new CustomeButton("START GAME", buttonSize, colorBtnSingle, hoverBtnSingle, pressedColorBtnSingle);
+
+    // Añade un ActionListener al botón para iniciar el juego cuando se presione.
+    cbsp.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // Obtiene los valores de los campos de texto.
+            String playerName = textName.getText().trim();
+            String rounds = textRounds.getText().trim();
+            String timeWords = textTime.getText().trim();
+            String wordsCant = textWordsCant.getText().trim();
+            
+            // Crea una nueva instancia de la pantalla del juego.
+            GameScreen gs = new GameScreen(playerName, rounds, timeWords, wordsCant, "", "");
+            
+            // Hace visible la pantalla del juego y la centra en la pantalla.
+            gs.setVisible(true);
+            gs.setLocationRelativeTo(null);
+            
+            // Cierra la ventana actual.
+            dispose();
+        }
+    });
+
+    // Usa GridBagConstraints para colocar el botón en el panel.
+    GridBagConstraints gbcSingle = new GridBagConstraints();
+    gbcSingle.gridx = 0;
+    gbcSingle.gridy = 9; // Fila donde se coloca el botón.
+    gbcSingle.insets = new Insets(10, 10, 10, 10); // Márgenes alrededor del botón.
+    gbcSingle.anchor = GridBagConstraints.CENTER; // Centra el botón en el espacio disponible.
+
+    // Añade el botón al panel y actualiza el panel.
+    panelComponents.add(cbsp, gbcSingle);
+    panelComponents.revalidate();
+    panelComponents.repaint();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

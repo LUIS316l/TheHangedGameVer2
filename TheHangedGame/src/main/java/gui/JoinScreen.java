@@ -17,36 +17,35 @@ import utils.CloseAllWindows;
 
 public class JoinScreen extends javax.swing.JFrame {
 
-    private KeyEventDispatcher escKeyDispatcher;
-    private boolean isEscapePressed = false;
-    
-    private Font labelFont = new Font("Doto", Font.BOLD, 20);
-    private Color textColorLabel = Color.WHITE;
+  // Declara una variable de tipo KeyEventDispatcher para manejar eventos de teclado.
+private KeyEventDispatcher escKeyDispatcher;
+// Declara una variable booleana para controlar si la tecla ESCAPE ha sido presionada.
+private boolean isEscapePressed = false;
 
-    private CustomeTextField textName;
-    private CustomeTextField textCode;
-        
-    public JoinScreen() {
-        initComponents();
-        isEscapePressed = false;
-        addEscKeyListener();
-        addCustomeTextField();
-        addCustomeList();
+// Define el estilo de la fuente para las etiquetas (tipo "Doto", negrita, tamaño 20).
+private Font labelFont = new Font("Doto", Font.BOLD, 20);
+// Define el color del texto de las etiquetas como blanco.
+private Color textColorLabel = Color.WHITE;
+
+// Declara las variables para los campos de texto personalizados (nombre de usuario y código de juego).
+private CustomeTextField textName;
+private CustomeTextField textCode;
+
+// Constructor de la clase JoinScreen.
+public JoinScreen() {
+    // Inicializa los componentes visuales de la pantalla (por ejemplo, botones, paneles, etc.).
+    initComponents();
+    // Establece que la tecla ESCAPE no ha sido presionada al principio.
+    isEscapePressed = false;
+    // Llama al método que añade un listener para la tecla ESCAPE.
+    addEscKeyListener();
+    // Llama al método que añade los campos de texto personalizados a la pantalla.
+    addCustomeTextField();
+    // Llama al método que añade la lista de jugadores a la pantalla.
+    addCustomeList();
     }
     
-    private void startClient() {
-        String ip = textCode.getText();
-        String playerName = textName.getText();
-        
-        String serverAddress = ip;
-        int port = 12345;
-        
-        Cliente cliente = new Cliente(serverAddress, port, playerName);
-        Thread clienteThread = new Thread(cliente); 
-        clienteThread.start();
-        
-        System.out.println("CLIENTE CONECTANDOSE AL SERVIDOR " + serverAddress + ":" + port);        
-    }
+  
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -88,115 +87,154 @@ public class JoinScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addEscKeyListener() {
-        escKeyDispatcher = new KeyEventDispatcher() {
-            @Override
-            public boolean dispatchKeyEvent(KeyEvent e) {
-                if (e.getID() == KeyEvent.KEY_PRESSED && e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    abrirVentanaAnterior();
-                    return true;
-                } else if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    startClient();
-                }
-                
-                return false; 
+        // Crea un KeyEventDispatcher para manejar los eventos de teclas presionadas.
+    escKeyDispatcher = new KeyEventDispatcher() {
+        @Override
+        // Método que se llama cada vez que se detecta un evento de teclado.
+        public boolean dispatchKeyEvent(KeyEvent e) {
+            // Si la tecla presionada es ESCAPE, se ejecuta abrirVentanaAnterior().
+            if (e.getID() == KeyEvent.KEY_PRESSED && e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                abrirVentanaAnterior(); // Llama a abrirVentanaAnterior.
+                return true; // Indica que el evento fue manejado.
+            }
+            // Si la tecla presionada es ENTER, se ejecuta startGame().
+            else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                startGame(); // Llama a startGame.
+            }
+            // Si la tecla no es ESCAPE ni ENTER, retorna false indicando que no se manejó el evento.
+            return false;
             }
         };
 
-        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(escKeyDispatcher);
+         // Registra el KeyEventDispatcher para escuchar los eventos de teclado en el foco actual.
+    KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(escKeyDispatcher);
+    }
+    private void startGame() {
+       // Obtiene los valores de los campos de texto (nombre de jugador e IP del juego).
+    String playerName = textName.getText();
+    String ip = textCode.getText();
+
+    // Crea una nueva instancia de GameScreen con los valores obtenidos.
+    GameScreen gs = new GameScreen(playerName, null, null, null, "Join", ip);
+
+    // Hace visible la ventana GameScreen.
+    gs.setVisible(true);
+    // Centra la ventana en la pantalla.
+    gs.setLocationRelativeTo(null);
+
+    // Imprime un mensaje en la consola.
+    System.out.println("HOLA");
     }
     
-    
     private void abrirVentanaAnterior() {
-        if (isEscapePressed) {
-            return;
-        }
-        
-        isEscapePressed = true;
-        
-        KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(escKeyDispatcher);
-        
-        CloseAllWindows.cerrarTodasLasVentanas();
-        
-        JoinOrCreate joc = new JoinOrCreate();
-                   
-        joc.setVisible(true);
-        joc.setLocationRelativeTo(null);
+          // Verifica si la tecla ESCAPE ya fue presionada para evitar múltiples ejecuciones.
+    if (isEscapePressed) {
+        return; // Si ya se presionó, no hace nada.
+    }
 
-        this.dispose();
+    // Marca que la tecla ESCAPE ha sido presionada.
+    isEscapePressed = true;
+
+    // Elimina el KeyEventDispatcher para que la tecla ESCAPE ya no tenga efecto.
+    KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(escKeyDispatcher);
+
+    // Llama al método estático para cerrar todas las ventanas abiertas.
+    CloseAllWindows.cerrarTodasLasVentanas();
+
+    // Crea una nueva instancia de JoinOrCreate.
+    JoinOrCreate joc = new JoinOrCreate();
+
+    // Hace visible la ventana JoinOrCreate.
+    joc.setVisible(true);
+    // Centra la ventana en la pantalla.
+    joc.setLocationRelativeTo(null);
+
+    // Cierra la ventana actual.
+    this.dispose();
     }
     
       
     private void addCustomeTextField() {
-        int columns = 20;
-        Dimension textFieldSize = new Dimension(250, 40);
-        Color defaultColor = new Color(255, 255, 255);
-        Color focusColor = new Color(200, 230, 250);
-        Color textColor = Color.BLACK; 
-        Color hoverColor = new Color(100, 200, 250);
-        int radius = 15;
-        
-        
-        JLabel label1 = new JLabel("USER NAME: ");
-        textName = new CustomeTextField(columns, textFieldSize, defaultColor, focusColor, textColor, hoverColor, radius);
-        label1.setFont(labelFont);
-        label1.setForeground(textColorLabel);
-         
-        JLabel label2 = new JLabel("CODE GAME: ");
-        textCode = new CustomeTextField(columns, textFieldSize, defaultColor, focusColor, textColor, hoverColor, radius);
-        label2.setFont(labelFont);
-        label2.setForeground(textColorLabel);
-        
-        GridBagConstraints gbcCt = new GridBagConstraints();
-        gbcCt.gridx = 0;
-        gbcCt.insets = new Insets(10, 15, 10, 0); 
-        gbcCt.anchor = GridBagConstraints.WEST; 
+       // Define las propiedades para el campo de texto (columnas, tamaño, colores, etc.).
+    int columns = 20;
+    Dimension textFieldSize = new Dimension(250, 40);
+    Color defaultColor = new Color(255, 255, 255);
+    Color focusColor = new Color(200, 230, 250);
+    Color textColor = Color.BLACK;
+    Color hoverColor = new Color(100, 200, 250);
+    int radius = 15;
 
-        gbcCt.gridy = 0;
-        panelComponents.add(label1, gbcCt);
+    // Crea las etiquetas y campos de texto personalizados.
+    JLabel label1 = new JLabel("USER NAME: ");
+    textName = new CustomeTextField(columns, textFieldSize, defaultColor, focusColor, textColor, hoverColor, radius);
+    label1.setFont(labelFont); // Establece el estilo de la fuente para la etiqueta.
+    label1.setForeground(textColorLabel); // Establece el color del texto de la etiqueta.
 
-        gbcCt.gridy = 1; 
-        panelComponents.add(textName, gbcCt); 
+    JLabel label2 = new JLabel("CODE GAME: ");
+    textCode = new CustomeTextField(columns, textFieldSize, defaultColor, focusColor, textColor, hoverColor, radius);
+    label2.setFont(labelFont); // Establece el estilo de la fuente para la etiqueta.
+    label2.setForeground(textColorLabel); // Establece el color del texto de la etiqueta.
 
-        gbcCt.gridy = 2;
-        panelComponents.add(label2, gbcCt); 
+    // Define el layout de GridBag para organizar los componentes.
+    GridBagConstraints gbcCt = new GridBagConstraints();
+    gbcCt.gridx = 0; // Establece la posición en la columna 0.
+    gbcCt.insets = new Insets(10, 15, 10, 0); // Añade un margen de 10 píxeles en la parte superior e izquierda.
+    gbcCt.anchor = GridBagConstraints.WEST; // Alinea los componentes a la izquierda.
 
-        gbcCt.gridy = 3;
-        panelComponents.add(textCode, gbcCt); 
+    // Establece las posiciones de las etiquetas y campos de texto en el layout.
+    gbcCt.gridy = 0;
+    panelComponents.add(label1, gbcCt);
 
-        panelComponents.revalidate();
-        panelComponents.repaint();
+    gbcCt.gridy = 1;
+    panelComponents.add(textName, gbcCt);
+
+    gbcCt.gridy = 2;
+    panelComponents.add(label2, gbcCt);
+
+    gbcCt.gridy = 3;
+    panelComponents.add(textCode, gbcCt);
+
+    // Revalida y repinta el panel para que los componentes sean visibles.
+    panelComponents.revalidate();
+    panelComponents.repaint();
     }
     
     private void addCustomeList() {
-        DefaultListModel<String> model = new DefaultListModel<>();
-        model.addElement("Player 1");
-        model.addElement("Player 2");
-        model.addElement("Player 3");
-        model.addElement("Player 4");
-  
-        Dimension listSize = new Dimension(250, 200); 
-        Color defaultColor = new Color(255, 255, 255);
-        Color textColor = Color.BLACK;
-        int borderRadius = 20;
-        
-        JLabel label3 = new JLabel("PLAYERS ");
-        CustomeList<String> customeList = new CustomeList<>(model, listSize, defaultColor, textColor, borderRadius);
-        label3.setFont(labelFont);
-        label3.setForeground(textColorLabel);
+       // Crea un modelo de lista con algunos jugadores predefinidos.
+    DefaultListModel<String> model = new DefaultListModel<>();
+    model.addElement("Player 1");
+    model.addElement("Player 2");
+    model.addElement("Player 3");
+    model.addElement("Player 4");
 
-        GridBagConstraints gbcCl = new GridBagConstraints();
-        gbcCl.gridx = 0;
-        gbcCl.insets = new Insets(10, 15, 10, 0);
-        gbcCl.anchor = GridBagConstraints.WEST;
+    // Define el tamaño y colores de la lista.
+    Dimension listSize = new Dimension(250, 200);
+    Color defaultColor = new Color(255, 255, 255);
+    Color textColor = Color.BLACK;
+    int borderRadius = 20;
         
-        gbcCl.gridy = 4;
-        panelComponents.add(label3, gbcCl); 
-        
-        gbcCl.gridy = 5;
-        panelComponents.add(customeList, gbcCl); 
+          // Crea una etiqueta y una lista personalizada con los jugadores.
+    JLabel label3 = new JLabel("PLAYERS ");
+    CustomeList<String> customeList = new CustomeList<>(model, listSize, defaultColor, textColor, borderRadius);
+    label3.setFont(labelFont); // Establece el estilo de la fuente para la etiqueta.
+    label3.setForeground(textColorLabel); // Establece el color del texto de la etiqueta.
 
-        panelComponents.revalidate();
-        panelComponents.repaint();
+    // Define el layout de GridBag para organizar la lista.
+    GridBagConstraints gbcCl = new GridBagConstraints();
+    gbcCl.gridx = 0; // Establece la posición en la columna 0.
+    gbcCl.insets = new Insets(10, 15, 10, 0); // Añade un margen de 10 píxeles en la parte superior e izquierda.
+    gbcCl.anchor = GridBagConstraints.WEST; // Alinea los componentes a la izquierda.
+
+    // Establece las posiciones de la etiqueta y la lista en el layout.
+    gbcCl.gridy = 4;
+    panelComponents.add(label3, gbcCl);
+
+    gbcCl.gridy = 5;
+    panelComponents.add(customeList, gbcCl);
+
+    // Revalida y repinta el panel para que los componentes sean visibles.
+    panelComponents.revalidate();
+    panelComponents.repaint();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

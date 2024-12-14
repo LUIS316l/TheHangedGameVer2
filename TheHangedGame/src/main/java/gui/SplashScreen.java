@@ -5,9 +5,13 @@ import java.awt.event.KeyEvent;
 
 public class SplashScreen extends javax.swing.JFrame {
 
-    public SplashScreen() {
-        initComponents();
-        addEnterKeyListener();
+   // Constructor de la clase SplashScreen
+public SplashScreen() {
+    // Inicializa los componentes de la ventana (normalmente generados por el diseñador de interfaz gráfica)
+    initComponents();
+    
+    // Agrega el escuchador de teclas para que el panel responda a las teclas presionadas
+    addEnterKeyListener();
     }
 
     @SuppressWarnings("unchecked")
@@ -71,34 +75,61 @@ public class SplashScreen extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    private void addEnterKeyListener() {
-        panelSplash.addKeyListener(new KeyAdapter() {
-           public void keyPressed(KeyEvent e) {
-               if(e.getKeyCode() == KeyEvent.VK_SPACE) {
-                   HomeScreen hs = new HomeScreen();
-                   
-                   hs.setVisible(true);
-                   hs.setLocationRelativeTo(null);
-                   
-                   dispose();
-               } else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                   HowGameScreen hgs = new HowGameScreen();
-                   
-                   hgs.setVisible(true);
-                   hgs.setLocationRelativeTo(null);
-                   
-                   dispose();
-               } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                   ADMscreen adms = new ADMscreen();
-                   
-                   adms.setVisible(true);
-                   adms.setLocationRelativeTo(null);
-                   
-                   dispose();
-               }
-           }
-        });
-        panelSplash.setFocusable(true);
+   // Método que agrega un escuchador de teclas (key listener) para detectar cuando se presionan teclas específicas en el panel.
+private void addEnterKeyListener() {
+    // Se agrega un KeyListener al panel 'panelSplash', para que detecte los eventos de teclado.
+    panelSplash.addKeyListener(new KeyAdapter() {
+        
+        // Método que se ejecuta cuando se presiona una tecla.
+        public void keyPressed(KeyEvent e) {
+            
+            // Si la tecla presionada es la barra espaciadora (Space), realiza las siguientes acciones:
+            if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+                // Crea una nueva instancia de la pantalla principal 'HomeScreen'.
+                HomeScreen hs = new HomeScreen();
+                
+                // Hace visible la ventana de la pantalla principal.
+                hs.setVisible(true);
+                
+                // Centra la pantalla en la pantalla del usuario.
+                hs.setLocationRelativeTo(null);
+                
+                // Cierra la ventana actual (en la que se detectó la tecla).
+                dispose();
+                
+            // Si la tecla presionada es ESCAPE, realiza las siguientes acciones:
+            } else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                // Crea una nueva instancia de la pantalla 'HowGameScreen'.
+                HowGameScreen hgs = new HowGameScreen();
+                
+                // Hace visible la ventana de la pantalla de instrucciones del juego.
+                hgs.setVisible(true);
+                
+                // Centra la pantalla de instrucciones en la pantalla del usuario.
+                hgs.setLocationRelativeTo(null);
+                
+                // Cierra la ventana actual.
+                dispose();
+                
+            // Si la tecla presionada es ENTER, realiza las siguientes acciones:
+            } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                // Crea una nueva instancia de la pantalla de administración 'ADMscreen'.
+                ADMscreen adms = new ADMscreen();
+                
+                // Hace visible la ventana de administración.
+                adms.setVisible(true);
+                
+                // Centra la pantalla de administración en la pantalla del usuario.
+                adms.setLocationRelativeTo(null);
+                
+                // Cierra la ventana actual.
+                dispose();
+            }
+        }
+    });
+    
+    // Hace que el panel 'panelSplash' sea capaz de recibir eventos de teclado.
+    panelSplash.setFocusable(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

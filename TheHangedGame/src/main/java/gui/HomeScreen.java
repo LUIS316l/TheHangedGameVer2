@@ -11,9 +11,10 @@ public class HomeScreen extends JFrame {
     
     // INSTANCIAS Y VARIABLES
             
-    public HomeScreen() {
-        initComponents();
-        addCustomeButton();
+  // Constructor de la clase HomeScreen
+public HomeScreen() {
+    initComponents(); // Inicializa los componentes de la interfaz
+    addCustomeButton(); // Agrega los botones personalizados
     }
     
 
@@ -54,49 +55,56 @@ public class HomeScreen extends JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void addCustomeButton() {
-        Dimension buttonSize = new Dimension(250, 50);
-        Color colorBtnSingle = new Color(33, 77, 103);
-        Color hoverBtnSingle = new Color(56, 182, 255);
-        Color pressedColorBtnSingle = new Color(33, 77, 103);
-        
-        Color colorBtnMulti = new Color(66, 120, 170);
-        Color hoverBtnMilti = new Color(56, 182, 255);
-        Color pressedColorBtnMulti = new Color(66, 120, 170);
-        
-        CustomeButton cbsp = new CustomeButton("SINGLE PLAYER", buttonSize, colorBtnSingle, hoverBtnSingle, pressedColorBtnSingle);
-        CustomeButton cbmp = new CustomeButton("MULTI PLAYER", buttonSize, colorBtnMulti, hoverBtnMilti, pressedColorBtnMulti);
-               
-        cbsp.addActionListener(e -> NavigationManager.navigateTo(this, new SinglePlayerScreen()));
-        cbmp.addActionListener(e -> NavigationManager.navigateTo(this, new JoinOrCreate()));
+   // Método para agregar botones personalizados
+private void addCustomeButton() {
+    Dimension buttonSize = new Dimension(250, 50); // Tamaño de los botones
 
-        
-        GridBagConstraints gbcSingle = new GridBagConstraints();
-        gbcSingle.gridx = 0; 
-        gbcSingle.gridy = 0; 
-        gbcSingle.insets = new Insets(10, 10, 10, 10); 
-        gbcSingle.anchor = GridBagConstraints.CENTER;
-        
-        GridBagConstraints gbcMulti = new GridBagConstraints();
-        gbcMulti.gridx = 0; 
-        gbcMulti.gridy = 0; 
-        gbcMulti.insets = new Insets(10, 10, 10, 10); 
-        gbcMulti.anchor = GridBagConstraints.CENTER;
-        
-        panelSingle.add(cbsp, gbcSingle);
-        panelSingle.revalidate();
-        panelSingle.repaint();
-        
-        panelMulti.add(cbmp, gbcMulti);
-        panelMulti.revalidate();
-        panelMulti.repaint();
+    // Configuración de colores para los botones
+    Color colorBtnSingle = new Color(33, 77, 103);
+    Color hoverBtnSingle = new Color(56, 182, 255);
+    Color pressedColorBtnSingle = new Color(33, 77, 103);
+
+    Color colorBtnMulti = new Color(66, 120, 170);
+    Color hoverBtnMilti = new Color(56, 182, 255);
+    Color pressedColorBtnMulti = new Color(66, 120, 170);
+
+    // Creación de los botones personalizados
+    CustomeButton cbsp = new CustomeButton("SINGLE PLAYER", buttonSize, colorBtnSingle, hoverBtnSingle, pressedColorBtnSingle);
+    CustomeButton cbmp = new CustomeButton("MULTI PLAYER", buttonSize, colorBtnMulti, hoverBtnMilti, pressedColorBtnMulti);
+
+    // Añade acciones a los botones
+    cbsp.addActionListener(e -> NavigationManager.navigateTo(this, new SinglePlayerScreen()));
+    cbmp.addActionListener(e -> NavigationManager.navigateTo(this, new JoinOrCreate()));
+
+    // Configuración de las restricciones de diseño
+    GridBagConstraints gbcSingle = new GridBagConstraints();
+    gbcSingle.gridx = 0;
+    gbcSingle.gridy = 0;
+    gbcSingle.insets = new Insets(10, 10, 10, 10);
+    gbcSingle.anchor = GridBagConstraints.CENTER;
+
+    GridBagConstraints gbcMulti = new GridBagConstraints();
+    gbcMulti.gridx = 0;
+    gbcMulti.gridy = 0;
+    gbcMulti.insets = new Insets(10, 10, 10, 10);
+    gbcMulti.anchor = GridBagConstraints.CENTER;
+
+    // Agrega los botones a los paneles correspondientes
+    panelSingle.add(cbsp, gbcSingle);
+    panelSingle.revalidate();
+    panelSingle.repaint();
+
+    panelMulti.add(cbmp, gbcMulti);
+    panelMulti.revalidate();
+    panelMulti.repaint();
     }
     
-    public class NavigationManager {
+  // Clase de gestión de navegación entre pantallas
+public class NavigationManager {
     public static void navigateTo(JFrame current, JFrame next) {
-        next.setVisible(true);
-        next.setLocationRelativeTo(null);
-        current.dispose();
+        next.setVisible(true); // Muestra la nueva pantalla
+        next.setLocationRelativeTo(null); // Centra la nueva pantalla
+        current.dispose(); // Cierra la pantalla actual
     }
 }
 
